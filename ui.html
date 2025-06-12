@@ -16,7 +16,27 @@
     />
     <style>
       :root {
-        --primary-color: #7121e7;
+        --primary: #7121e7;
+        --primary-50: #f1e9fd;
+        --primary-100: #e3d3fa;
+        --primary-600: #601cc5;
+        --primary-700: #5018a3;
+
+        /* Base colors */
+        --white: #fff;
+        --black: #000;
+
+        /* Gray scale */
+        --gray-50: #fafafa;
+        --gray-100: #f5f5f5;
+        --gray-200: #e5e5e5;
+        --gray-300: #d4d4d4;
+        --gray-400: #a3a3a3;
+        --gray-500: #737373;
+        --gray-600: #525252;
+        --gray-700: #404040;
+        --gray-800: #262626;
+        --gray-900: #171717;
       }
 
       * {
@@ -29,8 +49,8 @@
         font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
           Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
           'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-        background-color: #f9fafb;
-        color: #111;
+        background-color: var(--gray-50);
+        color: var(--gray-900);
       }
 
       .container {
@@ -42,7 +62,7 @@
       h1 {
         display: flex;
         align-items: center;
-        column-gap: 0.25rem;
+        column-gap: 0.5rem;
         margin: 0;
         font-size: 1.25rem;
         font-weight: 600;
@@ -50,13 +70,13 @@
 
       label.checkbox {
         position: relative;
+        align-self: flex-start;
         display: inline-flex;
         align-items: center;
         gap: 0.25rem;
         font-size: 0.875rem;
         font-weight: 500;
         user-select: none;
-        cursor: pointer;
       }
 
       label.checkbox input[type='checkbox'] {
@@ -70,29 +90,30 @@
         cursor: pointer;
         transition: all 0.2s ease;
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       label.checkbox input[type='checkbox']:checked {
-        border-color: var(--primary-color);
-        background-color: var(--primary-color);
+        border-color: var(--primary);
+        background-color: var(--primary);
       }
 
       label.checkbox input[type='checkbox']::after {
         content: '';
-        position: absolute;
-        top: 0.0625rem;
-        left: 0.3125rem;
-        width: 0.3125rem;
-        height: 0.625rem;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-        opacity: 0;
-        transition: opacity 0.2s ease;
+        display: none;
       }
 
       label.checkbox input[type='checkbox']:checked::after {
-        opacity: 1;
+        content: '';
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        background-image: url("data:image/svg+xml,%3csvg viewBox='6 8 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m9 12 2 2 4-4' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
       }
 
       .flex {
@@ -100,27 +121,53 @@
         gap: 1rem;
       }
 
-      .textarea-group {
-        flex: 1;
+      .field-group {
+        flex: 1 1 0;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
         position: relative;
+        min-width: 0;
       }
 
-      .textarea-group.hidden {
+      .field-group.hidden {
         display: none;
       }
 
-      .textarea-group-header {
+      .field-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 0.5rem;
       }
 
-      .textarea-label {
-        font-weight: 500;
-        color: #333;
+      .field-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--gray-800);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 0;
+      }
+
+      .field-label-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .field-label.readonly::after {
+        content: 'Auto';
+        font-size: 0.6875rem;
+        font-weight: normal;
+        color: var(--gray-600);
+        background-color: transparent;
+        border: 1px solid var(--gray-300);
+        padding: 0.125rem 0.375rem;
+        border-radius: 1rem;
+        white-space: nowrap;
+        letter-spacing: -0.01em;
       }
 
       textarea {
@@ -129,30 +176,106 @@
         font-size: 0.875rem;
         font-family: 'Fira Code', monospace;
         border-radius: 0.625rem;
-        border: 1px solid #d1d5db;
-        background-color: #fff;
+        border: 1px solid var(--gray-200);
+        background-color: var(--white);
         resize: vertical;
         white-space: pre;
         overflow: auto;
         resize: none;
+        transition: all 0.15s ease;
+      }
+
+      textarea::placeholder {
+        color: var(--gray-500);
+      }
+
+      textarea:hover {
+        border-color: var(--gray-400);
+      }
+
+      textarea:focus {
+        outline: none;
       }
 
       textarea:focus-visible {
-        outline-color: var(--primary-color);
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px var(--white), 0 0 0 4px rgba(113, 33, 231, 0.2);
+      }
+
+      .variable-name-container {
+        height: calc(100vh - 10.5rem);
+        padding: 0.75rem;
+        font-size: 0.875rem;
+        font-family: 'Fira Code', monospace;
+        border-radius: 0.625rem;
+        background-color: var(--gray-50);
+        border: 1px solid var(--gray-200);
+        overflow: auto;
+        white-space: pre;
+        color: var(--gray-700);
+        cursor: text;
+        user-select: text;
+        position: relative;
+        transition: all 0.15s ease;
+      }
+
+      .variable-name-container:hover {
+        background-color: var(--gray-100);
+        border-color: var(--gray-400);
+      }
+
+      .variable-name-container:empty::before {
+        content: 'Select a layer';
+        color: var(--gray-500);
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        font-size: 0.875rem;
+        white-space: nowrap;
+        pointer-events: none;
       }
 
       .copy-button {
-        padding: 0.375rem 0.75rem;
-        font-size: 0.875rem;
-        background-color: #e5e7eb;
-        border: none;
+        padding: 0.375rem 0.5rem;
+        font-size: 0.75rem;
+        background-color: var(--primary-50);
+        border: 1px solid var(--primary-100);
         border-radius: 0.375rem;
+        color: var(--primary);
         cursor: pointer;
-        transition: background 0.2s ease;
+        transition: all 0.15s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .copy-button svg {
+        width: 0.875rem;
+        height: 0.875rem;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+
+      .copy-button::before {
+        display: none;
       }
 
       .copy-button:hover {
-        background-color: #d1d5db;
+        background-color: var(--primary-100);
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .copy-button:active {
+        background-color: var(--primary-100);
+        border-color: var(--primary-600);
+        color: var(--primary-600);
       }
 
       .toast {
@@ -160,8 +283,8 @@
         bottom: 16px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: #111;
-        color: #fff;
+        background-color: var(--gray-900);
+        color: var(--white);
         padding: 0.625rem 1rem;
         border-radius: 0.5rem;
         font-size: 0.875rem;
@@ -179,7 +302,6 @@
   <body>
     <div class="container">
       <h1>
-        Text Extractor
         <svg
           width="28"
           height="28"
@@ -212,27 +334,48 @@
             />
           </defs>
         </svg>
+        Text Extractor
       </h1>
 
       <label class="checkbox">
-        <input type="checkbox" id="autoKeyId" checked />
+        <input type="checkbox" id="autoVariableName" checked />
         Auto-generate variable name
       </label>
 
       <div class="flex">
-        <section class="textarea-group">
-          <div class="textarea-group-header">
-            <label class="textarea-label" for="textArea">Text</label>
-            <button class="copy-button" data-target="textArea">Copy</button>
+        <section class="field-group">
+          <div class="field-header">
+            <label class="field-label" for="textArea">
+              <span class="field-label-text">Text</span>
+            </label>
+            <button class="copy-button" data-target="textArea">
+              <svg viewBox="0 0 24 24">
+                <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                <path
+                  d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
+                />
+              </svg>
+              Copy
+            </button>
           </div>
           <textarea id="textArea" placeholder="Select a layer"></textarea>
         </section>
-        <section class="textarea-group key-id">
-          <div class="textarea-group-header">
-            <label class="textarea-label" for="keyIdArea">Variable Name</label>
-            <button class="copy-button" data-target="keyIdArea">Copy</button>
+        <section class="field-group key-id">
+          <div class="field-header">
+            <label class="field-label readonly">
+              <span class="field-label-text">Variable Name</span>
+            </label>
+            <button class="copy-button" data-target="variableNameContainer">
+              <svg viewBox="0 0 24 24">
+                <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                <path
+                  d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
+                />
+              </svg>
+              Copy
+            </button>
           </div>
-          <textarea id="keyIdArea" placeholder="Select a layer"></textarea>
+          <div id="variableNameContainer" class="variable-name-container"></div>
         </section>
       </div>
     </div>
@@ -240,36 +383,57 @@
     <div id="toast" class="toast"></div>
 
     <script>
-      const autoKeyId = document.getElementById('autoKeyId');
-      const keyIdArea = document.getElementById('keyIdArea');
+      const autoVariableName = document.getElementById('autoVariableName');
+      const variableNameContainer = document.getElementById('variableNameContainer');
       const textArea = document.getElementById('textArea');
       const toast = document.getElementById('toast');
 
-      autoKeyId.onchange = () => {
+      function toCamelCase(text) {
+        return text
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9 ]/g, '')
+          .split(/\s+/)
+          .map((word, i) => (i === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)))
+          .join('');
+      }
+
+      function updateVariableNames() {
+        if (!autoVariableName.checked) {
+          return;
+        }
+        const lines = textArea.value.split('\n');
+        const variableNames = lines.map((line) => toCamelCase(line));
+        variableNameContainer.textContent = variableNames.join('\n');
+      }
+
+      autoVariableName.onchange = () => {
         const keyIdGroup = document.querySelector('.key-id');
-        if (!autoKeyId.checked) {
+        if (!autoVariableName.checked) {
           keyIdGroup.classList.add('hidden');
         } else {
           keyIdGroup.classList.remove('hidden');
+          updateVariableNames();
         }
 
         parent.postMessage(
           {
             pluginMessage: {
-              type: 'update-autoKeyId',
-              value: autoKeyId.checked,
+              type: 'update-autoVariableName',
+              value: autoVariableName.checked,
             },
           },
           '*',
         );
       };
 
+      textArea.addEventListener('input', updateVariableNames);
+
       onmessage = (event) => {
         const msg = event.data.pluginMessage;
-        if (msg.type === 'export-data') {
+        if (msg.type === 'extract-texts') {
           const rows = msg.texts;
-          keyIdArea.value = rows.map((r) => r.keyId || '').join('\n');
-          textArea.value = rows.map((r) => r.localText).join('\n');
+          textArea.value = rows.map(({ text }) => text).join('\n');
+          updateVariableNames();
         }
       };
 
@@ -284,10 +448,21 @@
       document.querySelectorAll('.copy-button').forEach((button) => {
         button.addEventListener('click', () => {
           const targetId = button.getAttribute('data-target');
-          const textarea = document.getElementById(targetId);
-          textarea.select();
-          document.execCommand('copy');
-          showToast(`${targetId === 'keyIdArea' ? 'Variable Name' : 'Text'} copied!`);
+          const target = document.getElementById(targetId);
+
+          if (target.tagName === 'TEXTAREA') {
+            target.select();
+            document.execCommand('copy');
+          } else {
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = target.textContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+          }
+
+          showToast(`${targetId === 'variableNameContainer' ? 'Variable Name' : 'Text'} copied!`);
         });
       });
     </script>

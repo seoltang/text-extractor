@@ -29,7 +29,7 @@ function extractTexts() {
 
 const STORAGE_KEY = 'delimiter-sets';
 
-figma.showUI(__html__);
+figma.showUI(__html__, { width: 500, height: 800 });
 
 // 초기 로드 시 선택된 텍스트 전송
 figma.ui.postMessage({

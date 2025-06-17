@@ -745,9 +745,14 @@
             shortcutInput.value = '';
           });
 
-          shortcutInput.addEventListener('keydown', (e) => {
-            e.preventDefault();
-            const key = e.code.replace('Key', '');
+          shortcutInput.addEventListener('keydown', (event) => {
+            // Tab 키는 기본 동작 유지
+            if (event.key === 'Tab') {
+              return;
+            }
+
+            event.preventDefault();
+            const key = event.code.replace('Key', '');
             if (/^[A-Z]$/.test(key)) {
               shortcutInput.value = key;
               delimiterSetsData[index].shortcutKey = key;

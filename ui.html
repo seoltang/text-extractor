@@ -747,6 +747,15 @@
       const DELIMITER_SET_MAX_COUNT = 3;
       let isCompactMode = false;
 
+      // ===== 단축키 아이콘 생성 =====
+      const createModifierIcon = () => {
+        if (isMac) {
+          return `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-command-icon lucide-command"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>`;
+        } else {
+          return 'Ctrl';
+        }
+      };
+
       // ===== DOM 요소 =====
       const elements = {
         autoVariableName: document.getElementById('autoVariableName'),
@@ -862,8 +871,8 @@
                 set.closing
               }" />
               <span style="display:flex;align-items:center;gap:0.25rem;">
-                <span class="shortcut-modifier" style="font-size:0.75rem;">${modifierLabel}</span>
-                <span style="font-size:0.75rem;">+</span>
+                <span class="shortcut-modifier" style="font-size:0.75rem;">${createModifierIcon()}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                 <input type="text" class="shortcut-input" maxlength="1" placeholder="E" value="${
                   set.shortcutKey || ''
                 }" style="width:2.5em;text-align:center;" />

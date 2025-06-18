@@ -917,20 +917,25 @@
             }
 
             event.preventDefault();
+            // 물리적 키 위치로 영어 알파벳 인식 (한글/영어 키보드 모두 지원)
             const key = event.code.replace('Key', '');
-            if (/^[A-Z]$/.test(key)) {
-              shortcutInput.value = key;
-              delimiterSetsData[index].shortcutKey = key;
-              delimiterSetsData[index].shortcut = `${modifierLabel} + ${key}`;
+
+            const updateShortcutKey = (key) => {
+              if (/^[A-Z]$/.test(key)) {
+                shortcutInput.value = key;
+                delimiterSetsData[index].shortcutKey = key;
+                delimiterSetsData[index].shortcut = `${modifierLabel} + ${key}`;
+                shortcutInput.blur(); // 포커스 해제하여 입력 완료
+              } else {
+                shortcutInput.value = '';
+                delimiterSetsData[index].shortcutKey = '';
+                delimiterSetsData[index].shortcut = '';
+              }
               saveDelimiterSets();
               updateDelimiterButtons();
-            } else {
-              shortcutInput.value = '';
-              delimiterSetsData[index].shortcutKey = '';
-              delimiterSetsData[index].shortcut = '';
-              saveDelimiterSets();
-              updateDelimiterButtons();
-            }
+            };
+
+            updateShortcutKey(key);
           });
 
           deleteButton.addEventListener('click', () => {

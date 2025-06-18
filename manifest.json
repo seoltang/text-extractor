@@ -1,6 +1,6 @@
 {
   "name": "text-extractor",
-  "id": "1512330403114150335",
+  "id": "1517104014625110357",
   "api": "1.0.0",
   "main": "code.js",
   "capabilities": ["inspect"],
@@ -9,10 +9,6 @@
   "editorType": ["figma", "dev"],
   "ui": "ui.html",
   "networkAccess": {
-    "allowedDomains": [
-      "https://fonts.googleapis.com",
-      "https://fonts.gstatic.com",
-      "https://cdn.jsdelivr.net"
-    ]
+    "allowedDomains": ["https://fonts.googleapis.com", "https://fonts.gstatic.com"]
   }
 }

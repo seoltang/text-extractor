@@ -76,7 +76,6 @@
       }
 
       h1 {
-        display: none;
         align-items: center;
         column-gap: 0.5rem;
         margin: 0;
@@ -242,7 +241,7 @@
       }
 
       .variable-name-container:empty::before {
-        content: 'Select a layer';
+        content: 'Select a frame';
         color: var(--gray-500);
         position: absolute;
         top: 0.75rem;
@@ -520,10 +519,131 @@
       footer strong {
         font-weight: 500;
       }
+
+      /* Design Mode Styles */
+      .mode-switch {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 10;
+      }
+
+      .mode-switch-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: var(--gray-100);
+        border-radius: 1rem;
+        padding: 0.125rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      .mode-switch-option {
+        position: relative;
+        padding: 0.25rem;
+        color: var(--gray-600);
+        cursor: pointer;
+        transition: color 0.2s ease;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.75rem;
+        height: 1.75rem;
+      }
+
+      .mode-switch-option.active {
+        color: var(--white);
+      }
+
+      .mode-switch-option svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        stroke-width: 0.5;
+        stroke: currentColor;
+        fill: none;
+      }
+
+      .mode-switch-slider {
+        position: absolute;
+        top: 0.125rem;
+        left: 0.125rem;
+        width: calc(50% - 0.125rem);
+        height: calc(100% - 0.25rem);
+        background: #0d99ff;
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        z-index: 1;
+      }
+
+      .mode-switch-container:not(.design) .mode-switch-slider {
+        transform: translateX(100%);
+        background: #24cb71;
+      }
+
+      body.design-mode .variable-name,
+      body.design-mode .delimiter-buttons,
+      body.design-mode .delimiter-section,
+      body.design-mode .checkbox,
+      body.design-mode .footer {
+        display: none !important;
+      }
+
+      body.design-mode .flex {
+        flex-direction: column;
+      }
+
+      body.design-mode h1 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      body.design-mode textarea {
+        min-height: 200px;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="mode-switch">
+        <div class="mode-switch-container" id="modeSwitchContainer">
+          <div class="mode-switch-option" data-mode="design">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.45959 4.68218C5.3752 4.37236 4.37243 5.37519 4.68225 6.45952L6.64807 13.3326C7.19055 15.868 9.43757 17.7708 12.1315 17.771C12.5978 17.771 13.0512 17.713 13.484 17.605C13.5629 17.5854 13.6223 17.6098 13.651 17.6382L14.8688 18.8599H14.8697C15.5526 19.5439 16.6596 19.5439 17.3424 18.8599L18.8619 17.3375H18.8629C19.5447 16.6536 19.5447 15.5447 18.8629 14.8609H18.8619L17.6227 13.6197C17.5945 13.5913 17.5698 13.532 17.5885 13.4537C17.6883 13.035 17.7418 12.5982 17.7418 12.149C17.7418 9.63862 16.0998 7.51388 13.8336 6.79155L13.6129 6.72613L13.6178 6.72808C13.6161 6.72757 13.6137 6.7266 13.6119 6.72613L6.45959 4.68218ZM13.3434 7.68902C13.345 7.68948 13.3466 7.6905 13.3483 7.69097C15.3035 8.22606 16.7418 10.0189 16.7418 12.149C16.7418 12.5185 16.6979 12.8779 16.6158 13.2222C16.5265 13.5976 16.6135 14.0239 16.9147 14.3257L18.1539 15.5679C18.4466 15.8615 18.4465 16.3369 18.1539 16.6304L16.6354 18.1529C16.3432 18.4458 15.87 18.4457 15.5778 18.1529L14.359 16.9322C14.0537 16.6264 13.621 16.5398 13.2418 16.6343C12.8861 16.7231 12.5141 16.771 12.1315 16.771C9.90981 16.7708 8.05251 15.1937 7.61779 13.0933L7.61487 13.0757L7.60901 13.0572L5.72619 6.4732L10.1461 10.8531C10.0523 11.0489 9.99868 11.2679 9.99865 11.4996C9.99865 12.3279 10.6703 12.9995 11.4987 12.9996C12.3271 12.9996 12.9987 12.328 12.9987 11.4996C12.9986 10.6712 12.327 9.99956 11.4987 9.99956C11.2673 9.99959 11.0488 10.0535 10.8531 10.147L10.8502 10.1441L6.35901 5.69292L13.3434 7.68902ZM11.4987 10.9996C11.7747 10.9996 11.9986 11.2235 11.9987 11.4996C11.9987 11.7757 11.7748 11.9996 11.4987 11.9996C11.2226 11.9995 10.9987 11.7756 10.9987 11.4996C10.9987 11.2236 11.2227 10.9997 11.4987 10.9996ZM12.9821 7.18999C12.976 7.38688 13.0892 7.61666 13.3434 7.68902L13.2467 7.65191C13.0564 7.55731 12.9736 7.37177 12.9821 7.18999ZM13.9772 7.27007L13.9762 7.273C13.9783 7.25683 13.9785 7.24047 13.9791 7.22417C13.9787 7.23965 13.979 7.25508 13.9772 7.27007ZM13.4811 6.70855C13.228 6.70858 13.0598 6.88071 13.0026 7.06206C13.0596 6.86921 13.2256 6.70858 13.4811 6.70855Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <div class="mode-switch-option active" data-mode="dev">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.12444 7.67081C7.30633 7.46333 7.62183 7.4422 7.82952 7.62394C8.0371 7.80571 8.05791 8.12124 7.8764 8.32901L4.66448 11.9999L7.8764 15.6708C8.05809 15.8785 8.03698 16.194 7.82952 16.3759C7.62174 16.5577 7.3063 16.5367 7.12444 16.329L3.62444 12.329C3.4595 12.1405 3.4595 11.8593 3.62444 11.6708L7.12444 7.67081ZM13.5532 7.77628C13.6767 7.52951 13.9772 7.4292 14.2241 7.55265C14.4708 7.67615 14.5709 7.97668 14.4477 8.22355L10.4477 16.2235C10.3242 16.4705 10.0237 16.5705 9.77679 16.4472C9.5298 16.3237 9.42966 16.0233 9.55315 15.7763L13.5532 7.77628ZM16.1713 7.62394C16.3791 7.4424 16.6946 7.46316 16.8764 7.67081L20.3764 11.6708C20.5412 11.8592 20.5411 12.1405 20.3764 12.329L16.8764 16.329C16.6946 16.5367 16.3791 16.5576 16.1713 16.3759C15.9636 16.194 15.9426 15.8786 16.1244 15.6708L19.3364 11.9999L16.1244 8.32901C15.9426 8.12122 15.9636 7.80579 16.1713 7.62394Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <div class="mode-switch-slider"></div>
+        </div>
+      </div>
       <h1>Text Extractor</h1>
 
       <label class="checkbox">
@@ -547,7 +667,7 @@
               Copy
             </button>
           </div>
-          <textarea id="textArea" placeholder="Select a layer"></textarea>
+          <textarea id="textArea" placeholder="Select a frame"></textarea>
         </section>
         <section class="field-group variable-name">
           <div class="field-header">
@@ -597,7 +717,7 @@
               </span>
             </span>
           </h2>
-          <button class="button sm" id="addDelimiterButton">
+          <button class="button" id="addDelimiterButton">
             <svg viewBox="0 0 24 24" width="16" height="16">
               <path
                 d="M12 4v16m8-8H4"
@@ -625,6 +745,7 @@
       const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
       const modifierLabel = isMac ? '⌘' : 'Ctrl';
       const DELIMITER_SET_MAX_COUNT = 3;
+      let isCompactMode = false;
 
       // ===== DOM 요소 =====
       const elements = {
@@ -638,6 +759,50 @@
         shortcutKey: document.getElementById('shortcutKey'),
         delimiterHeader: document.getElementById('delimiterHeader'),
         delimiterContent: document.getElementById('delimiterContent'),
+        modeSwitchContainer: document.getElementById('modeSwitchContainer'),
+      };
+
+      // ===== 디자인 모드 토글 기능 =====
+      const createModeController = () => {
+        let isDesignMode = false;
+
+        const switchMode = (mode) => {
+          const switchContainer = elements.modeSwitchContainer;
+          const options = switchContainer.querySelectorAll('.mode-switch-option');
+
+          isDesignMode = mode === 'design';
+
+          if (isDesignMode) {
+            // 디자인 모드 활성화
+            document.body.classList.add('design-mode');
+            switchContainer.classList.add('design');
+            parent.postMessage({ pluginMessage: { type: 'resize', width: 300, height: 400 } }, '*');
+          } else {
+            // 개발자 모드로 복원
+            document.body.classList.remove('design-mode');
+            switchContainer.classList.remove('design');
+            parent.postMessage({ pluginMessage: { type: 'resize', width: 500, height: 800 } }, '*');
+          }
+
+          // 활성 상태 업데이트
+          options.forEach((option) => {
+            option.classList.toggle('active', option.dataset.mode === mode);
+          });
+        };
+
+        const initialize = () => {
+          const options = elements.modeSwitchContainer.querySelectorAll('.mode-switch-option');
+          options.forEach((option) => {
+            option.addEventListener('click', () => {
+              switchMode(option.dataset.mode);
+            });
+          });
+        };
+
+        return {
+          initialize,
+          switchMode,
+        };
       };
 
       // ===== Variable Name 관련 기능 =====
@@ -880,6 +1045,11 @@
           });
 
           document.addEventListener('keydown', (event) => {
+            // 디자인 모드에서는 키보드 단축키 비활성화
+            if (document.body.classList.contains('design-mode')) {
+              return;
+            }
+
             const modifier = isMac ? event.metaKey : event.ctrlKey;
             if (modifier) {
               const key = event.code.replace('Key', '');
@@ -954,6 +1124,7 @@
       const variableNameGenerator = createVariableNameGenerator();
       const delimiterController = createDelimiterController();
       const uiService = createUIService();
+      const modeController = createModeController();
 
       // ===== 메시지 핸들러 =====
       onmessage = (event) => {
@@ -972,6 +1143,7 @@
       variableNameGenerator.initialize();
       delimiterController.initialize();
       uiService.initializeCopyButtons();
+      modeController.initialize();
     </script>
   </body>
 </html>

@@ -55,7 +55,12 @@ figma.on('selectionchange', () => {
 
 // UI로부터 메시지 수신
 figma.ui.onmessage = async (msg) => {
-  if (msg.type === 'save-delimiter-sets') {
-    await figma.clientStorage.setAsync(STORAGE_KEY, msg.sets);
+  switch (msg.type) {
+    case 'save-delimiter-sets':
+      await figma.clientStorage.setAsync(STORAGE_KEY, msg.sets);
+      break;
+    case 'resize':
+      figma.ui.resize(msg.width, msg.height);
+      break;
   }
 };
